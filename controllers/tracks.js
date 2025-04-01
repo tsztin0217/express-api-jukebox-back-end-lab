@@ -34,18 +34,28 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const track = await Track.findById(req.params.id);
-
         const updatedTrack = await Track.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true}
-        )
-        res.status(200).json(track);
+        );
+        res.status(200).json(updatedTrack);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message});
     }
 });
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedTrack = await Track.findByIdAndDelete(
+            req.params.id
+        );
+        res.status(200).json(deletedTrack);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message});
+    }
+})
 
 module.exports = router;
